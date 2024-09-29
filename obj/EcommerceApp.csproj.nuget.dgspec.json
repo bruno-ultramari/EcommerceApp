@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\bruno\\source\\repos\\EcommerceApp\\EcommerceApp.csproj": {}
+    "c:\\Users\\bruno\\source\\repos\\EcommerceApp\\EcommerceApp.csproj": {}
   },
   "projects": {
-    "C:\\Users\\bruno\\source\\repos\\EcommerceApp\\EcommerceApp.csproj": {
+    "c:\\Users\\bruno\\source\\repos\\EcommerceApp\\EcommerceApp.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\bruno\\source\\repos\\EcommerceApp\\EcommerceApp.csproj",
+        "projectUniqueName": "c:\\Users\\bruno\\source\\repos\\EcommerceApp\\EcommerceApp.csproj",
         "projectName": "EcommerceApp",
-        "projectPath": "C:\\Users\\bruno\\source\\repos\\EcommerceApp\\EcommerceApp.csproj",
+        "projectPath": "c:\\Users\\bruno\\source\\repos\\EcommerceApp\\EcommerceApp.csproj",
         "packagesPath": "C:\\Users\\bruno\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\bruno\\source\\repos\\EcommerceApp\\obj\\",
+        "outputPath": "c:\\Users\\bruno\\source\\repos\\EcommerceApp\\obj\\",
         "projectStyle": "PackageReference",
         "fallbackFolders": [
           "C:\\Program Files (x86)\\Microsoft Visual Studio\\Shared\\NuGetPackages"
