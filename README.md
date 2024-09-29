@@ -1,6 +1,6 @@
 
 
-````markdown
+
 # E-commerce Simples
 
 Este é um projeto de E-commerce Simples integrado ao Sistema de Registro de Usuários, desenvolvido com **ASP.NET Core**, **Entity Framework**, **SQL Server**, **HTML**, **CSS** e **JavaScript**.
@@ -21,7 +21,7 @@ Antes de começar, você precisará ter instalado em sua máquina:
    git clone https://github.com/bruno-ultramari/EcommerceApp
    cd EcommerceApp
    ```
-````
+
 
 2. **Abra o Projeto no VS Code**
 
