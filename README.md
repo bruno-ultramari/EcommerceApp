@@ -1,4 +1,4 @@
-Aqui está um exemplo de um `README.md` que você pode usar para documentar como configurar e rodar o seu projeto de E-commerce Simples integrado ao Sistema de Registro de Usuários. Você pode personalizar as seções conforme necessário.
+
 
 ````markdown
 # E-commerce Simples
