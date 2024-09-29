@@ -1,3 +1,4 @@
+using EcommerceApp.Models;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 
@@ -8,6 +9,17 @@ public class ApplicationDbContext : IdentityDbContext
     {
     }
 
-    // Adicione DbSet para suas tabelas, por exemplo:
-    // public DbSet<Product> Products { get; set; }
+
+    public DbSet<Product> Products { get; set; }
+
+    protected override void OnModelCreating(ModelBuilder modelBuilder)
+    {
+        base.OnModelCreating(modelBuilder);
+
+        // Configura o email como único
+        modelBuilder.Entity<User>()
+            .HasIndex(u => u.Email)
+            .IsUnique();
+    }
+
 }
