@@ -1,0 +1,58 @@
+@page
+@model EcommerceApp.Models.RegisterModel
+@{
+    ViewData["Title"] = "Register";
+}
+
+<h2>Register</h2>
+
+<form method="post">
+    <div>
+        <label asp-for="Input.FirstName"></label>
+        <input asp-for="Input.FirstName" />
+        <span asp-validation-for="Input.FirstName" />
+    </div>
+    <div>
+        <label asp-for="Input.LastName"></label>
+        <input asp-for="Input.LastName" />
+        <span asp-validation-for="Input.LastName" />
+    </div>
+    <div>
+        <label asp-for="Input.Email"></label>
+        <input asp-for="Input.Email" />
+        <span asp-validation-for="Input.Email" />
+    </div>
+    <div>
+        <label asp-for="Input.Password"></label>
+        <input asp-for="Input.Password" type="password" />
+        <span asp-validation-for="Input.Password" />
+    </div>
+    <div>
+        <label asp-for="Input.ConfirmPassword"></label>
+        <input asp-for="Input.ConfirmPassword" type="password" />
+        <span asp-validation-for="Input.ConfirmPassword" />
+    </div>
+    <button type="submit">Register</button>
+</form>
+
+<div>
+    <a href="/Login">Already have an account? Login</a>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Validação de senhas fortes e outros campos obrigatórios
+        $('form').on('submit', function (e) {
+            const password = $('#Input_Password').val();
+            const confirmPassword = $('#Input_ConfirmPassword').val();
+            if (password.length < 8) {
+                alert('Password must be at least 8 characters long.');
+                e.preventDefault();
+            } else if (password !== confirmPassword) {
+                alert('Passwords do not match.');
+                e.preventDefault();
+            }
+        });
+    </script>
+}

@@ -1,0 +1,40 @@
+@page
+@model EcommerceApp.Models.LoginModel
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+
+<form method="post">
+    <div>
+        <label asp-for="Input.Email"></label>
+        <input asp-for="Input.Email" />
+        <span asp-validation-for="Input.Email" />
+    </div>
+    <div>
+        <label asp-for="Input.Password"></label>
+        <input asp-for="Input.Password" type="password" />
+        <span asp-validation-for="Input.Password" />
+    </div>
+    <button type="submit">Login</button>
+</form>
+
+<div>
+    <a href="/Register">Don't have an account? Register</a>
+</div>
+
+@section Scripts {
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script>
+        // Validação de campos obrigatórios
+        $('form').on('submit', function (e) {
+            const email = $('#Input_Email').val();
+            const password = $('#Input_Password').val();
+            if (!email || !password) {
+                alert('Email and password are required.');
+                e.preventDefault();
+            }
+        });
+    </script>
+}

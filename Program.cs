@@ -1,6 +1,9 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.Extensions.DependencyInjection;
+using EcommerceApp.Models;
+using EcommerceApp.Pages;
+using EcommerceApp.Controllers;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -9,13 +12,15 @@ builder.Services.AddDbContext<ApplicationDbContext>(options =>
     options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection")));
 
 // Configuração do Identity (usuários e roles)
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options =>
+builder.Services.AddIdentity<User, IdentityRole>(options =>
 {
     options.SignIn.RequireConfirmedAccount = true;
     // Outras opções de configuração de identidade, se necessário
 })
     .AddEntityFrameworkStores<ApplicationDbContext>()
     .AddDefaultTokenProviders();
+
+builder.Services.AddScoped<SignInManager<User>>();
 
 // Adicionar serviço de autorização
 builder.Services.AddAuthorization();
