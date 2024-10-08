@@ -18,6 +18,18 @@ build_property.GenerateRazorMetadataSourceChecksumAttributes =
 build_property.MSBuildProjectDirectory = C:\Users\bruno\source\repos\EcommerceApp
 build_property._RazorSourceGeneratorDebug = 
 
+[C:/Users/bruno/source/repos/EcommerceApp/Pages/ForgotPassword.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcRm9yZ290UGFzc3dvcmQuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/bruno/source/repos/EcommerceApp/Pages/Login.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcTG9naW4uY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
+[C:/Users/bruno/source/repos/EcommerceApp/Pages/Register.cshtml]
+build_metadata.AdditionalFiles.TargetPath = UGFnZXNcUmVnaXN0ZXIuY3NodG1s
+build_metadata.AdditionalFiles.CssScope = 
+
 [C:/Users/bruno/source/repos/EcommerceApp/Views/Home/Index.cshtml]
 build_metadata.AdditionalFiles.TargetPath = Vmlld3NcSG9tZVxJbmRleC5jc2h0bWw=
 build_metadata.AdditionalFiles.CssScope = 
