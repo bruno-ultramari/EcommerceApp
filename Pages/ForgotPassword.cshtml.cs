@@ -1,27 +1,39 @@
+using System;
+using System.Net.Mail;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
-using System.ComponentModel.DataAnnotations;
-using System.Threading.Tasks;
+using Microsoft.Extensions.Configuration; // Importante para acessar as configurações
+using EcommerceApp.Models;
 
 namespace EcommerceApp.Pages
 {
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-    public class ForgotPasswordModel(UserManager<IdentityUser> userManager) : PageModel
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+    public class ForgotPasswordModel : PageModel
     {
-        private readonly UserManager<IdentityUser> _userManager = userManager;
+        private readonly UserManager<User> _userManager;
+        private readonly SmtpClient _smtpClient;
+        private readonly IConfiguration _configuration;
 
         [BindProperty]
         public InputModel Input { get; set; }
 
+        // Ajuste para injetar SmtpClient e IConfiguration
+        public ForgotPasswordModel(UserManager<User> userManager, SmtpClient smtpClient, IConfiguration configuration)
+        {
+            _userManager = userManager;
+            _smtpClient = smtpClient;
+            _configuration = configuration;
+
+            Input = new InputModel
+            {
+                Email = string.Empty,
+            };
+        }
+
         public class InputModel
         {
-            [Required]
-            [EmailAddress]
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
-            public string Email { get; set; }
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider adding the 'required' modifier or declaring as nullable.
+            public required string Email { get; set; }
         }
 
         public async Task<IActionResult> OnPostAsync()
@@ -29,15 +41,62 @@ namespace EcommerceApp.Pages
             if (ModelState.IsValid)
             {
                 var user = await _userManager.FindByEmailAsync(Input.Email);
-                if (user == null)
+                if (user != null)
                 {
-                    // Não revele que o usuário não existe
-                    return RedirectToPage("ForgotPasswordConfirmation");
+                    // Gera o token de recuperação de senha
+                    var token = await _userManager.GeneratePasswordResetTokenAsync(user);
+
+                    // Cria o link de reset de senha
+                    string? resetLink = Url.Page(
+                       "/ResetPassword",
+                       pageHandler: null,
+                       values: new { userId = user.Id, token = token },
+                       protocol: Request.Scheme);
+
+                    // Envia o e-mail de recuperação
+                    if (!string.IsNullOrEmpty(resetLink))
+                    {
+                        // Envia o e-mail de recuperação
+                        await SendPasswordResetEmail(Input.Email, resetLink);
+                    }
+                    else
+                    {
+                        // Lida com o caso de resetLink ser null (opcional: logar ou exibir mensagem)
+                        ModelState.AddModelError(string.Empty, "Ocorreu um erro ao gerar o link de recuperação de senha.");
+                    }
                 }
 
-                // Lógica de recuperação de senha vai aqui
+                // Não revele se o email é válido ou não
+                return RedirectToPage("ForgotPasswordConfirmation");
             }
+
             return Page();
         }
+
+        private async Task SendPasswordResetEmail(string email, string resetLink)
+        {
+            // Obtenha o nome de usuário do arquivo de configuração
+            var userName = _configuration["Smtp:UserName"];
+
+            // Verifica se o nome de usuário do e-mail é nulo ou vazio
+            if (string.IsNullOrEmpty(userName))
+            {
+                // Lida com o caso onde o nome de usuário não está configurado corretamente
+                throw new InvalidOperationException("O nome de usuário do SMTP não está configurado.");
+            }
+
+            var mailMessage = new MailMessage
+            {
+                From = new MailAddress(userName), // Garante que o userName não seja nulo
+                Subject = "Recuperação de Senha",
+                Body = $"Clique no link para resetar sua senha: <a href='{resetLink}'>Resetar Senha</a>",
+                IsBodyHtml = true,
+            };
+
+            mailMessage.To.Add(email);
+
+            await _smtpClient.SendMailAsync(mailMessage);
+        }
+
     }
 }
